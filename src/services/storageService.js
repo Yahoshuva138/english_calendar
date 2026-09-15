@@ -10,7 +10,7 @@ import {
   AVAILABLE_ONE_ON_ONE_SLOTS
 } from "../data/seedData";
 
-const STORAGE_KEY = "english_cr_hub_data_v2";
+const STORAGE_KEY = "sst_english_c_hub_2030_v3";
 
 export function loadPortalData() {
   try {

@@ -19,7 +19,7 @@ import {
 export default function App() {
   const [portalData, setPortalData] = useState(() => loadPortalData());
   const [currentRole, setCurrentRole] = useState("student"); // "student" | "admin"
-  const [selectedStudentId, setSelectedStudentId] = useState("S01");
+  const [selectedStudentId, setSelectedStudentId] = useState("S41"); // Yahoshuva Kesaboyina (CR)
   const [activeStudentTab, setActiveStudentTab] = useState("overview");
   const [activeAdminTab, setActiveAdminTab] = useState("gradingDesk");
 
@@ -35,7 +35,7 @@ export default function App() {
   const handleReset = () => {
     const fresh = resetToSeedData();
     setPortalData(fresh);
-    setSelectedStudentId("S01");
+    setSelectedStudentId("S41");
   };
 
   const handleBookSlot = (studentId, slot, reflection) => {

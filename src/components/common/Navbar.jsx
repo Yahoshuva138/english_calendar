@@ -37,13 +37,13 @@ export default function Navbar({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-base font-extrabold text-slate-900 tracking-tight">English CR Hub</span>
+                <span className="text-base font-extrabold text-slate-900 tracking-tight">SST English Hub</span>
                 <span className="hidden sm:inline-flex px-2 py-0.5 text-[10px] font-bold rounded-md bg-brand-50 text-brand-700 border border-brand-200">
-                  {batchInfo.courseCode || "ENG-202"}
+                  {batchInfo.batchTitle || "English C • 2030"}
                 </span>
               </div>
               <p className="text-xs text-slate-500 hidden md:block">
-                Activity & Grading Portal • {batchInfo.department || "CSE"}
+                {batchInfo.institution || "Scaler School of Technology"} • Term 1
               </p>
             </div>
           </div>
