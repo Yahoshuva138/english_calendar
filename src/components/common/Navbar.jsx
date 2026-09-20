@@ -61,6 +61,15 @@ export default function Navbar({
                   Dashboard Overview
                 </button>
                 <button
+                  onClick={() => setActiveTab('meetings')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                    activeTab === 'meetings' ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <Calendar className="w-3.5 h-3.5 text-brand-600" />
+                  Meetings &amp; Schedule
+                </button>
+                <button
                   onClick={() => setActiveTab('oneOnOne')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     activeTab === 'oneOnOne' ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
@@ -104,6 +113,15 @@ export default function Navbar({
                   Grading Desk
                 </button>
                 <button
+                  onClick={() => setActiveTab('meetings')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                    activeTab === 'meetings' ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <Calendar className="w-3.5 h-3.5 text-brand-600" />
+                  Live Schedule &amp; Rooms
+                </button>
+                <button
                   onClick={() => setActiveTab('masterGradebook')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                     activeTab === 'masterGradebook' ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
@@ -125,7 +143,7 @@ export default function Navbar({
                     activeTab === 'groups' ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Groups & Slots
+                  Groups &amp; Slots
                 </button>
               </>
             )}
@@ -215,6 +233,14 @@ export default function Navbar({
                 Overview
               </button>
               <button
+                onClick={() => setActiveTab('meetings')}
+                className={`px-2.5 py-1 rounded-md text-xs font-semibold whitespace-nowrap ${
+                  activeTab === 'meetings' ? 'bg-brand-50 text-brand-700' : 'text-slate-600'
+                }`}
+              >
+                📅 Meetings
+              </button>
+              <button
                 onClick={() => setActiveTab('oneOnOne')}
                 className={`px-2.5 py-1 rounded-md text-xs font-semibold whitespace-nowrap ${
                   activeTab === 'oneOnOne' ? 'bg-brand-50 text-brand-700' : 'text-slate-600'
@@ -256,6 +282,14 @@ export default function Navbar({
                 }`}
               >
                 Grading Desk
+              </button>
+              <button
+                onClick={() => setActiveTab('meetings')}
+                className={`px-2.5 py-1 rounded-md text-xs font-semibold whitespace-nowrap ${
+                  activeTab === 'meetings' ? 'bg-brand-50 text-brand-700' : 'text-slate-600'
+                }`}
+              >
+                📅 Live Schedule
               </button>
               <button
                 onClick={() => setActiveTab('masterGradebook')}

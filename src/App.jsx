@@ -5,6 +5,7 @@ import OneOnOneFeedbackView from './components/student/OneOnOneFeedbackView';
 import ThirtyDayChallengeView from './components/student/ThirtyDayChallengeView';
 import ConditionalsPresentationView from './components/student/ConditionalsPresentationView';
 import StorytellingView from './components/student/StorytellingView';
+import MeetingHub from './components/meetings/MeetingHub';
 import AdminDashboard from './components/admin/AdminDashboard';
 import {
   loadPortalData,
@@ -100,6 +101,17 @@ export default function App() {
                 groupSubmissions={portalData.groupSubmissions}
                 batchInfo={portalData.batchInfo}
                 onNavigateTab={(tab) => setActiveStudentTab(tab)}
+              />
+            )}
+
+            {activeStudentTab === 'meetings' && (
+              <MeetingHub
+                student={currentStudent}
+                group={currentGroup}
+                groups={portalData.groups}
+                students={portalData.students}
+                batchInfo={portalData.batchInfo}
+                availableSlots={portalData.availableSlots}
               />
             )}
 

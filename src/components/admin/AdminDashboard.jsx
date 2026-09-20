@@ -14,6 +14,7 @@ import GradingDesk from './GradingDesk';
 import MasterGradebook from './MasterGradebook';
 import AtRiskStudentsList from './AtRiskStudentsList';
 import GroupManager from './GroupManager';
+import MeetingHub from '../meetings/MeetingHub';
 import RubricGradingModal from '../common/RubricGradingModal';
 import { calculateStudentOverall } from '../../utils/gradeCalculations';
 import { exportGradebookToCSV } from '../../utils/exportCsv';
@@ -182,6 +183,17 @@ export default function AdminDashboard({
             groupSubmissions={groupSubmissions}
             activitiesConfig={activitiesConfig}
             onOpenGradingModal={handleOpenGradingModal}
+          />
+        )}
+
+        {activeAdminTab === 'meetings' && (
+          <MeetingHub
+            student={students[0]}
+            group={groups[0]}
+            groups={groups}
+            students={students}
+            batchInfo={batchInfo}
+            availableSlots={[]}
           />
         )}
 

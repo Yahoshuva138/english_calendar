@@ -8,14 +8,18 @@ import {
   UserCheck, 
   Calendar, 
   Flame, 
-  ArrowRight,
-  Video,
-  FileText,
-  Mic,
-  MessageSquare
+  ArrowRight, 
+  Video, 
+  FileText, 
+  Mic, 
+  MessageSquare,
+  CalendarPlus,
+  ExternalLink,
+  Sparkles
 } from 'lucide-react';
 import Badge from '../common/Badge';
 import { calculateStudentOverall } from '../../utils/gradeCalculations';
+import { createGoogleCalendarUrl } from '../../utils/calendarUtils';
 
 export default function StudentDashboard({
   student,
@@ -27,6 +31,38 @@ export default function StudentDashboard({
   const calc = calculateStudentOverall(student, groupSubmissions, batchInfo);
   const condSub = groupSubmissions.conditionals?.[student.groupId];
   const storySub = groupSubmissions.storytelling?.[student.groupId];
+
+  // Determine next upcoming meeting
+  const nextMeeting = student.oneOnOne?.status === 'scheduled' ? {
+    title: "1:1 English Diagnostic Feedback",
+    subtitle: `With ${batchInfo.facultyName} • Individual Diagnostic`,
+    date: student.oneOnOne.slotDate,
+    time: student.oneOnOne.slotTime,
+    meetLink: student.oneOnOne.meetLink || "https://meet.google.com/sst-eng-fb",
+    type: "1:1 Session"
+  } : group?.presentationSlotConditionals ? {
+    title: "Conditionals Presentation Showcase",
+    subtitle: `Topic: "${group.conditionalsTopic}"`,
+    date: group.presentationSlotConditionals.date,
+    time: group.presentationSlotConditionals.time,
+    meetLink: "https://meet.google.com/sst-eng-cond",
+    type: "Group Presentation"
+  } : {
+    title: "Daily 30×30 Speaking Sync",
+    subtitle: `${group?.name} Daily Conversational Practice`,
+    date: new Date().toISOString().split("T")[0],
+    time: "06:00 PM - 06:30 PM",
+    meetLink: `https://meet.google.com/sst-daily-${group?.id?.toLowerCase() || 'g1'}`,
+    type: "Daily Practice"
+  };
+
+  const nextMeetingCalUrl = nextMeeting ? createGoogleCalendarUrl({
+    title: `[SST English Lab] ${nextMeeting.title}`,
+    description: `${nextMeeting.subtitle}\nMeeting Room: ${nextMeeting.meetLink}\nCourse: ${batchInfo.courseName}`,
+    location: nextMeeting.meetLink,
+    date: nextMeeting.date,
+    timeRange: nextMeeting.time
+  }) : "#";
 
   return (
     <div className="space-y-6">
@@ -78,6 +114,72 @@ export default function StudentDashboard({
           </div>
         </div>
       </div>
+
+      {/* Prominent Next Scheduled Meeting Card */}
+      {nextMeeting && (
+        <div className="bg-gradient-to-r from-emerald-900 via-slate-900 to-teal-950 rounded-3xl p-6 sm:p-7 text-white shadow-lg border border-emerald-500/30 relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative z-10">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-500 text-slate-950 animate-pulse">
+                  <span className="w-2 h-2 rounded-full bg-slate-950 mr-1.5" /> Next Live Session
+                </span>
+                <span className="text-xs font-semibold text-emerald-300 px-2 py-0.5 rounded-md bg-white/10">
+                  {nextMeeting.type}
+                </span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                {nextMeeting.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300">
+                {nextMeeting.subtitle}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-slate-200">
+                <span className="flex items-center gap-1.5 font-bold">
+                  <Calendar className="w-4 h-4 text-emerald-400" /> {nextMeeting.date}
+                </span>
+                <span className="flex items-center gap-1.5 font-bold">
+                  <Clock className="w-4 h-4 text-emerald-400" /> {nextMeeting.time}
+                </span>
+                <span className="text-emerald-300 text-[11px] font-semibold">
+                  • Camera ON Mandatory
+                </span>
+              </div>
+            </div>
+
+            {/* Quick Action Buttons */}
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
+              <a
+                href={nextMeeting.meetLink}
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+              >
+                <Video className="w-4 h-4" /> Join Google Meet
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
+              <a
+                href={nextMeetingCalUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-3 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 transition-all flex items-center gap-1.5"
+              >
+                <CalendarPlus className="w-4 h-4 text-emerald-300" /> Add to Cal
+              </a>
+
+              <button
+                onClick={() => onNavigateTab('meetings')}
+                className="px-4 py-3 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 transition-all flex items-center gap-1.5"
+              >
+                All Meetings <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* At-Risk Warning Alert if any */}
       {calc.isAtRisk && (
